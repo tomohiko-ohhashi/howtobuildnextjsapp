@@ -1315,4 +1315,4 @@ GitHubのリポジトリができたので、それをVercelにインポート�
 
 # おわりに
 
-このガイドでは、Next.js、Prisma、PostgreSQLを使用してフルスタックアプリケーションを構築し、デプロイする方法を学びました。もしこのガイドで問題が発生したり質問がある場合は、[GitHub](https://github.com/prisma/prisma/discussions))か、[Prisma Slack](https://slack.prisma.io/)に気軽に書き込んでください。
+このガイドでは、Next.js、Prisma、PostgreSQLを使用してフルスタックアプリケーションを構築し、デプロイする方法を学びました。もしこのガイドで問題が発生したり質問がある場合は、[GitHub](https://github.com/prisma/prisma/discussions)か、[Prisma Slack](https://slack.prisma.io/)に気軽に書き込んでください。
