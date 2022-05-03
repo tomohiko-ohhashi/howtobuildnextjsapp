@@ -34,19 +34,19 @@ Next.jsでの[Static-Site Generation(SSG)とSercer-Side Renderring(SSR) *リン�
 ```
 $ npx create-next-app --example https://github.com/prisma/blogr-nextjs-prisma/tree/main blogr-nextjs-prisma
 ```
-<font color="Gray">リポジトリからダウンロードし､スタータープロジェクトを新規フォルダに作成｡</font>
+#### リポジトリからダウンロードし､スタータープロジェクトを新規フォルダに作成｡
 
 次のコマンドで、作成したディレクトリに移動してアプリを起動することができます。
 ```
 $ cd blogr-nextjs-prisma && npm run dev
 ```
-<font color="Gray">https://localhost:3000 でNext.jsアプリを起動します｡</font>
+#### https://localhost:3000 でNext.jsアプリを起動します｡
 
 このような画面を見ることができます｡
 
 <img width="100%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/1.png">
 
-<font color="Gray">現在のアプリの状況｡</font>
+#### 現在のアプリの状況｡
 
 このアプリは現在、'index.ts' ファイルの 'getStaticProps' から返されるハードコードされたデータを表示しています。後のセクションでは、実際のデータベースからデータが返されるように、これを変更します。
 
@@ -59,13 +59,13 @@ $ cd blogr-nextjs-prisma && npm run dev
 ```
 $ npm install prisma --save-dev
 ```
-<font color="Gray">Prisma CLIのインストール</font>
+#### Prisma CLIのインストール
 
 さて、Prisma CLIを使用して、以下のコマンドで基本的なPrismaを開始することができます:
 ```
 $ npx prisma init
 ```
-<font color="Gray">あなたのアプリ内にPrismaをinit</font>
+#### あなたのアプリ内にPrismaをinit
 
 これにより､'prisma'という新しいディレクトリ内に､次のファイルが作成されます｡
 - 'schema.prisma': データベースのスキーマ情報を含むPrismaの設定ファイル
@@ -78,7 +78,7 @@ $ npx prisma init
 DATABASE_URL="postgresql://giwuzwpdnrgtzv:d003c6a604bb400ea955c3abd8c16cc98f2d909283c322ebd8e9164b33ccdb75@ec2-54-170-123-247.eu-west-1.compute.amazonaws.com:5432/d6ajekcigbuca9"
 ```
 
-<font color="Gray">データベース接続URLの例</font>
+#### データベース接続URLの例
 
 
 >**注:** データベースがHerokuでホストされている場合､資格情報を表示し接続URLを[ここ](https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1#step-4-access-the-database-credentials-and-connection-url)からコピーできます｡
@@ -119,7 +119,7 @@ posts         Post[]
 }
 ```
 
-<font color="Gray">Prisma schema</font>
+#### Prisma schema
 
 >**注:** ときどき `@map` や `@@map` を使って、フィールド名やモデル名をデータベースの異なるカラム名やテーブル名にマッピングすることがあります。これは、NextAuth.js が、データベース内のものを特定の方法で呼び出すための特別な要件を備えているからです。
 
@@ -130,7 +130,7 @@ posts         Post[]
 ```
 $ npx prisma db push
 ```
-<font color="Gray">Prisma schemaに基づいてデータベースにテーブルを作る｡</font>
+#### Prisma schemaに基づいてデータベースにテーブルを作る｡
 
 次の出力がされます:
 
@@ -141,7 +141,7 @@ Prisma schema loaded from prisma/schema.prisma
 🚀  Your database is now in sync with your schema. Done in 2.10s
 ```
 
-<font color="Gray">データベースにPrisma schemaをpushしたときの出力｡</font>
+#### データベースにPrisma schemaをpushしたときの出力｡
 
 おめでとう､テーブルが作成されました！Prisma Studioを使ってダミーのデータを作ってください｡次のコマンドを実行します:
 
@@ -149,17 +149,17 @@ Prisma schema loaded from prisma/schema.prisma
 $ npx prisma studio
 ```
 
-<font color="Gray">Prisma Studioを開き､データベースをGUIで修正します｡</font>
+#### Prisma Studioを開き､データベースをGUIで修正します｡
 
 Prisma Studioのインターフェースを使って､新たに 'User'と'Post'のレコードを作成し､それらを関係フィールドで接続します｡
 
 <img width="100%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/2.png">
 
-<font color="Gray">'User'レコードを新たに作成</font>
+#### 'User'レコードを新たに作成
 
 <img width="100%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/3.png">
 
-<font color="Gray">新たに'Post'レコードを作成し､'User'レコードに接続する</font>
+#### 新たに'Post'レコードを作成し､'User'レコードに接続する
 
 # ステップ3-2. Prisma Clientのインストールと生成
 
@@ -169,7 +169,7 @@ Prismaを利用してNext.jsからデータベースにアクセスする前に�
 $ npm install @prisma/client
 ```
 
-<font color="Gray">Prisma Clientパッケージをインストール</font>
+#### Prisma Clientパッケージをインストール
 
 Prisma Clientは独自のスキーマに合わせて作られているため、Prismaのスキーマファイルが変更されるたびに、以下のコマンドを実行して更新する必要があります:
 
@@ -177,7 +177,7 @@ Prisma Clientは独自のスキーマに合わせて作られているため、P
 $ npx prisma generate
 ```
 
-<font color="Gray">Prisma Schemaの再生成｡</font>
+#### Prisma Schemaの再生成｡
 
 'PrismaClient'のインスタンスを1つだけ使用し、必要なファイルにインポートすることができます。このインスタンスは、'lib/' ディレクトリ内の 'prisma.ts' ファイルに作成されます。次のコマンドで不足しているディレクトリとファイルを作成します。:
 
@@ -185,7 +185,7 @@ $ npx prisma generate
 $ mkdir lib && touch lib/prisma.ts
 ```
 
-<font color="Gray">Prismaライブラリのために新規ディレクトリを作成｡</font>
+#### Prismaライブラリのために新規ディレクトリを作成｡
 
 そして､次のコードを 'lib/prisma.ts' に追記してください:
 
@@ -207,7 +207,7 @@ prisma = global.prisma;
 export default prisma;
 ```
 
-<font color="Gray">Prisma Clientへの接続を作成｡</font>
+#### Prisma Clientへの接続を作成｡
 
 これにより、データベースにアクセスする必要があるときはいつでも、必要なファイルに 'prisma' インスタンスをインポートすることができるようになりました。
 
@@ -223,7 +223,7 @@ export default prisma;
 import prisma from '../lib/prisma';
 ```
 
-<font color="Gray">Prisma Clientにインポートする｡</font>
+#### Prisma Clientにインポートする｡
 
 'prisma' のインスタンスは、データベースのデータを読み書きする際のインターフェイスになります。例えば、 'prisma.user.create()' で新しい 'User' レコードを作成したり、'prisma.post.findMany()' でデータベースから全ての 'Post' レコードを取得したりすることができます。Prisma Client API全体の概要については、[Prisma docs](https://www.prisma.io/docs/concepts/components/prisma-client/crud)を参照してください。
 
@@ -244,7 +244,7 @@ return { props: { feed } };
 };
 ```
 
-<font color="Gray">データベース内のすべての公開記事を検索します。</font>
+#### データベース内のすべての公開記事を検索します。
 
 Prisma Clientクエリで注意すべき2点:
 - 'published' が 'true' の'Post' レコードのみを含むように 'where' フィルタを指定する。
@@ -261,7 +261,7 @@ Prisma Clientクエリで注意すべき2点:
 import prisma from '../../lib/prisma';
 ```
 
-<font color="Gray">Prisma Clientをインポート</font>
+#### Prisma Clientをインポート
 
 これで、'getServerSideProps' の実装を更新して、データベースから適切なポストを取得し、コンポーネントの 'props' を介してフロントエンドで利用できるようにすることができます:
 
@@ -284,14 +284,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 ```
 
-<font color="Gray">IDをもとに特定の投稿を検索する。</font>
+#### IDをもとに特定の投稿を検索する。
 
 以上です。もし、アプリが起動しなくなった場合は、以下のコマンドで再起動することができます:
 ```
 $ npm run dev
 ```
 
-<font color="Gray">アプリを[http://localhost:3000](http://localhost:3000)で起動</font>
+#### アプリを[http://localhost:3000](http://localhost:3000)で起動
 
 そうでない場合は、ファイルを保存して、アプリを以下の場所で開いてください。
 http://localhost:3000
@@ -299,7 +299,7 @@ http://localhost:3000
 
 <img width="100%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/4.png">
 
-<font color="Gray">新しく公開された投稿</font>
+#### 新しく公開された投稿
 
 投稿をクリックすると、その詳細表示に移動することができます。
 
@@ -312,7 +312,7 @@ http://localhost:3000
 ```
 npm install next-auth@4 @next-auth/prisma-adapter
 ```
-<font color="Gray">NextAuthライブラリとNextAuth Prisma Adapterをインストールします。</font>
+#### NextAuthライブラリとNextAuth Prisma Adapterをインストールします。
 
 次に､[NextAuthに必要なテーブル](https://next-auth.js.org/adapters/typeorm/postgres) (*リンク切れ)を追加するために､データベーススキーマを変更します｡
 
@@ -387,7 +387,7 @@ model VerificationToken {
   @@map("verificationtokens")
 }
 ```
-<font color="Gray">Prismaスキーマを更新｡</font>
+#### Prismaスキーマを更新｡
 
 これらのモデルをさらに知るためには[NextAuth.jsドキュメント](https://next-auth.js.org/adapters/models)を参照してください｡
 
@@ -395,20 +395,20 @@ model VerificationToken {
 ```
 npx prisma db push
 ```
-<font color="Gray">Prismaスキーマに基づき、データベースのテーブルを更新します。</font>
+#### Prismaスキーマに基づき、データベースのテーブルを更新します。
 
 GitHub認証を使うため､新規に[GitHubでOAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps)を作成する必要があります｡はじめに､[GitHub](https://github.com/)にログインします｡そして､[Settings](https://github.com/settings/profile)を開き､[Developer settings](https://github.com/settings/apps)を開きます｡さらに[OAuth Apps](https://github.com/settings/developers)を開きます｡
 
 <img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/5.png">
 
-<font color="Gray">GitHubで新規にOAuth applicationを作成します｡</font>
+#### GitHubで新規にOAuth applicationを作成します｡
 
 **Register a new application** (または **New OAuth App)** ボタンをクリックし､登録フォームであなたのアプリの情報を入力します｡**Authorization callback URL**は、Next.js '/api/auth' route: 'http://localhost:3000/api/auth' です。
 
 重要なことは､**Authorization callback URL**の入力欄はAuth0のようなもの (コンマで区切った複数のcallback URL) でなく､ひとつのURLのみ入力可能です｡そのため､後々､本番環境にデプロイしたアプリを作りたい場合､再びGitHub OAuth appを作成する必要があります｡
 <img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/6.png">
 
-<font color="Gray">Authorization callback URLが正しいか確かめてください｡</font>
+#### Authorization callback URLが正しいか確かめてください｡
 
 **Register application**ボタンをクリックし､**Client ID**と**Client Secret**を新規作成します｡それらをコピーし､rootディレクトリの '.env'ファイルに 'GITHUB_ID' と'GITHUB_SECRET' という環境変数として追記します｡また、 'NEXTAUTH_URL' には、GitHubで設定した**Authorization callback URL**と同じ値 'http://localhost:3000/api/auth' を設定してください。
 
@@ -421,7 +421,7 @@ GITHUB_SECRET=509298c32faa283f28679ad6de6f86b2472e1bff
 NEXTAUTH_URL=http://localhost:3000/api/auth
 ```
 
-<font color="Gray">完成した.envファイル｡</font>
+#### 完成した.envファイル｡
 
 また、アプリケーション全体にわたってユーザーの認証状態を持続させる必要があります。アプリケーションのルートファイル '_app.tsx' をすばやく変更し、現在のルートコンポーネントを 'next-auth/react' パッケージの 'SessionProvider' でラップしてください。このファイルを開き、現在の内容を次のコードに置き換えます:
 
@@ -442,7 +442,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 export default App;
 ```
 
-<font color="Gray">NextAuth SessionProviderでラップします｡</font>
+#### NextAuth SessionProviderでラップします｡
 
 # ステップ5-2. ログイン機能の追加
 
@@ -663,7 +663,7 @@ const Header: React.FC = () => {
 export default Header;
 ```
 
-<font color="Gray">Headerを通してユーザーがログインすることを許可します｡</font>
+#### Headerを通してユーザーがログインすることを許可します｡
 
 ヘッダーがどのようにレンダリングされるのか、その概要を説明します。
 - もし認証されたユーザーがいなかったら､**Log in**ボタンを表示します｡
@@ -679,7 +679,7 @@ export default Header;
 mkdir -p pages/api/auth && touch pages/api/auth/[...nextauth].ts
 ```
 
-<font color="Gray">新規ディレクトリとAPIルートを作成します｡</font>
+#### 新規ディレクトリとAPIルートを作成します｡
 
 'pages/api/auth/[...nextauth].ts' というこの新規ファイルは､GitHub OAuth認証と[Prisma Adapter](https://next-auth.js.org/adapters/overview#prisma-adapter)で NextAuth.js を設定するために、次の定型文を追加します:
 
@@ -707,13 +707,13 @@ const options = {
 };
 ```
 
-<font color="Gray">NextAuthとPrisma Adapterを設定します｡</font>
+#### NextAuthとPrisma Adapterを設定します｡
 
 このコードを一度追加したら､ http://localhost:3000/api/auth/signin に再びアクセスします｡今度は**Sign in with GitHub**ボタンが表示されています｡
 
  <img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/7.png">
 
- <font color="Gray">NextAuthを使用してGitHubでサインイン｡</font>
+ #### NextAuthを使用してGitHubでサインイン｡
 
 クリックすると GitHub に転送され、そこで GitHub の認証情報を使って認証を行うことができます。認証が完了すると、再びアプリに戻ります。
 
@@ -723,7 +723,7 @@ const options = {
 
 <img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/8.png">
 
-<font color="Gray">ヘッダーにログアウトボタンが表示されています｡</font>
+#### ヘッダーにログアウトボタンが表示されています｡
 
 # ステップ6. 新規投稿機能の追加
 
@@ -737,7 +737,7 @@ const options = {
 touch pages/create.tsx
 ```
 
-<font color="Gray">投稿機能用の新規ファイルを作成します｡</font>
+#### 投稿機能用の新規ファイルを作成します｡
 
 今作成したファイルに以下のコードを追加します｡
 
@@ -818,7 +818,7 @@ const Draft: React.FC = () => {
 export default Draft;
 ```
 
-<font color="Gray">投稿作成機能のコンポーネントを新規作成</font>
+#### 投稿作成機能のコンポーネントを新規作成
 
 このページは 'Layout' コンポーネントにラップされ､ 'Header' や他のUIコンポーネントも含みます｡
 
@@ -845,7 +845,7 @@ const submitData = async (e: React.SyntheticEvent) => {
 };
 ```
 
-<font color="Gray">投稿するために､APIルートを呼び出します｡</font>
+#### 投稿するために､APIルートを呼び出します｡
 
 このコードでは、'useState' を使ってコンポーネントのstateから抽出した 'title' と 'content' プロパティを使用して、'api/post API' ルートへの HTTP POST リクエストで送信しています。
 
@@ -853,7 +853,7 @@ const submitData = async (e: React.SyntheticEvent) => {
 
 <img width="100%" alt="Create a new draft." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/9.png">
 
-<font color="Gray">新規下書きを作成｡</font>
+#### 新規下書きを作成｡
 
 'api/post' も '/drafts' ルートもまだ存在しないため､まだこれでは動きません｡
 
@@ -865,7 +865,7 @@ const submitData = async (e: React.SyntheticEvent) => {
 mkdir -p pages/api/post && touch pages/api/post/index.ts
 ```
 
-<font color="Gray">投稿用の新規APIルートの作成｡</font>
+#### 投稿用の新規APIルートの作成｡
 
 >**注:** この時点で、余分なディレクトリと 'index.ts' ファイルでルーティングをする代わりに、 'pages/api/post.ts' というファイルを作成することも可能でした。なぜそのようにしないかというと、後で 'api/post' ルートでHTTP DELETEリクエストのための直接的なルートを追加する必要があるからです。後でリファクタリングを省くために、すでに必要な方法でファイルを構成しているのです。
 
@@ -895,7 +895,7 @@ export default async function handle(req, res) {
 }
 ```
 
-<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。</font>
+#### Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。
 
 このコードは '/api/post/' ルートでやってきた任意のリクエストのための*handler*関数を実装します｡この実装は次のことをしています:
 
@@ -907,7 +907,7 @@ export default async function handle(req, res) {
 
 <img width="100%" alt="Testing creating a new post via the API Route." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/10.png">
 
-<font color="Gray">APIルートを使って投稿し､テストしてください｡</font>
+#### APIルートを使って投稿し､テストしてください｡
 
 **Create**をクリックし､ 'Post' レコードをデーターベースに追加します｡なお、作成直後にリダイレクトされる '/drafts' のルートはまだ 404 が表示されますが、これはすぐに修正します。ちなみにこの状態でも、'npx prisma studio' でPrisma Studioを再度実行すると、新しいPostレコードがデータベースに追加されていることが確認できます。
 
@@ -923,7 +923,7 @@ export default async function handle(req, res) {
 touch pages/drafts.tsx
 ```
 
-<font color="Gray">下書き機能のために新規ページを追加します｡</font>
+#### 下書き機能のために新規ページを追加します｡
 
 次に､以下のコードをファイルに追加してください:
 
@@ -1009,7 +1009,7 @@ const Drafts: React.FC<Props> = (props) => {
 export default Drafts;
 ```
 
-<font color="Gray">下書きページを更新し､下書きリストを表示できるようにします｡</font>
+#### 下書きページを更新し､下書きリストを表示できるようにします｡
 
 このReactコンポーネントでは、認証されたユーザーの「下書き」の一覧をレンダリングしています。Prisma Clientによるデータベースへの問い合わせは 'getServerSideProps' で実行されるため、下書きはサーバーサイドレンダリング時にデータベースから取得されます。そしてそのデータは、Reactコンポーネントの 'props' を介して利用できるようになります。
 
@@ -1017,7 +1017,7 @@ export default Drafts;
 
 <img width="100%" alt="Completed drafts page." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/11.png">
 
-<font color="Gray">下書きページを完成させる｡</font>
+#### 下書きページを完成させる｡
 
 # ステップ7. 公開機能の追加
 
@@ -1031,7 +1031,7 @@ export default Drafts;
 mkdir -p pages/api/publish && touch pages/api/publish/[id].ts
 ```
 
-<font color="Gray">投稿を公開する新規APIルートを作成します｡</font>
+#### 投稿を公開する新規APIルートを作成します｡
 
 そして､以下のコードを作成したファイルに追記してください:
 
@@ -1051,7 +1051,7 @@ export default async function handle(req, res) {
 }
 ```
 
-<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを更新します。</font>
+#### Prisma Clientを使用してデータベースを変更するためのAPIルートを更新します。
 
 URLから 'Post' のIDを取得し、Prisma Clientの 'update' メソッドで 'Post' レコードの 'published' フィールドを 'true' に更新するAPIルートハンドラーの実装です。
 
@@ -1142,13 +1142,13 @@ const Post: React.FC<PostProps> = (props) => {
 export default Post;
 ```
 
-<font color="Gray">Postコンポーネントを更新し、APIルート経由での公開を処理するようにします。</font>
+#### Postコンポーネントを更新し、APIルート経由での公開を処理するようにします。
 
 このコードでは、先ほど実装したAPIルートにHTTP PUTリクエストを送信する役割を担う 'PublishPost' 関数をReactコンポーネントに追加します。また、コンポーネントの 'render' 関数を修正して、ユーザーが認証されているかどうかをチェックし、認証されている場合は、投稿の詳細画面にも**Publish**ボタンを表示するようにしました。
 
-<img width="100%" alt="Create a new draft." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/12.png">
+![Create a new draft.]("https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/12.png")
 
-<font color="Gray">投稿用のPublishボタンが表示されました｡</font>
+#### 投稿用のPublishボタンが表示されました｡
 
 ボタンをクリックしたら､投稿公開画面に遷移し､そこに投稿が表示されます！
 
@@ -1165,7 +1165,7 @@ export default Post;
 touch pages/api/post/[id].ts
 ```
 
-<font color="Gray">投稿を削除する新規APIルートを作成します｡</font>
+#### 投稿を削除する新規APIルートを作成します｡
 
 そして､作成したファイルに以下のコードを追加してください:
 
@@ -1190,7 +1190,7 @@ export default async function handle(req, res) {
 }
 ```
 
-<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。</font>
+#### Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。
 
 このコードは、 '/api/post/:id' URL経由で入ってくるHTTP DELETEリクエストを処理します。ルートハンドラーは、URLから 'Post' レコードの 'id' を取得し、Prisma Clientを使用してデータベース内のこのレコードを削除します。
 
