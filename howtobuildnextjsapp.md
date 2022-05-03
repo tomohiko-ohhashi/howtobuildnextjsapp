@@ -43,7 +43,7 @@ $ cd blogr-nextjs-prisma && npm run dev
 
 このような画面を見ることができます｡
 
-<img width="85%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/1.png">
+<img width="100%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/1.png">
 
 <font color="Gray">現在のアプリの状況｡</font>
 
@@ -60,7 +60,7 @@ $ npm install prisma --save-dev
 ```
 <font color="Gray">Prisma CLIのインストール</font>
 
-さて、Prisma CLIを使用して、以下のコマンドで基本的なPrismaのセットアップをブートストラップすることができます:
+さて、Prisma CLIを使用して、以下のコマンドで基本的なPrismaを開始することができます:
 ```
 $ npx prisma init
 ```
@@ -78,7 +78,7 @@ $ npx prisma init
 <font color="Gray">データベース接続URLの例</font>
 
 
-注: データベースがHerokuでホストされている場合､資格情報を表示し接続URLを[ここ](https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1#step-4-access-the-database-credentials-and-connection-url)からコピーできます｡
+>**注:** データベースがHerokuでホストされている場合､資格情報を表示し接続URLを[ここ](https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1#step-4-access-the-database-credentials-and-connection-url)からコピーできます｡
 
 
 # ステップ3-1. Prismaでデータベーススキーマを作成する
@@ -117,8 +117,7 @@ $ npx prisma init
 
 <font color="Gray">Prisma schema</font>
 
-
-    注: ときどき `@map` や `@@map` を使って、フィールド名やモデル名をデータベースの異なるカラム名やテーブル名にマッピングすることがあります。これは、NextAuth.js が、データベース内のものを特定の方法で呼び出すための特別な要件を備えているからです。
+>**注:** ときどき `@map` や `@@map` を使って、フィールド名やモデル名をデータベースの異なるカラム名やテーブル名にマッピングすることがあります。これは、NextAuth.js が、データベース内のものを特定の方法で呼び出すための特別な要件を備えているからです。
 
 このPrismaスキーマは2つのモデルを定義し、それぞれが基礎となるデータベースのテーブルにマッピングされます。'User'と'Post'です。2つのモデルの間には、'Post'の'author'フィールドと'User'の'posts'フィールドを介したリレーション（一対多）も存在することに注意してください。
 
@@ -144,11 +143,11 @@ $ npx prisma studio
 
 Prisma Studioのインターフェースを使って､新たに 'User'と'Post'のレコードを作成し､それらを関係フィールドで接続します｡
 
-<img width="85%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/2.png">
+<img width="100%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/2.png">
 
 <font color="Gray">'User'レコードを新たに作成</font>
 
-<img width="85%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/3.png">
+<img width="100%" alt="Prisma Studio" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/3.png">
 
 <font color="Gray">新たに'Post'レコードを作成し､'User'レコードに接続する</font>
 
@@ -272,7 +271,7 @@ $ npm run dev
 http://localhost:3000
 をブラウザで表示します。Postの記録は以下のように表示されます:
 
-<img width="85%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/4.png">
+<img width="100%" alt="localhost:3000" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/4.png">
 
 <font color="Gray">新しく公開された投稿</font>
 
@@ -374,18 +373,18 @@ npx prisma db push
 
 GitHub認証を使うため､新規に[GitHubでOAuth app](https://docs.github.com/en/developers/apps/building-oauth-apps)を作成する必要があります｡はじめに､[GitHub](https://github.com/)にログインします｡そして､[Settings](https://github.com/settings/profile)を開き､[Developer settings](https://github.com/settings/apps)を開きます｡さらに[OAuth Apps](https://github.com/settings/developers)を開きます｡
 
-<img width="85%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/5.png">
+<img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/5.png">
 
 <font color="Gray">GitHubで新規にOAuth applicationを作成します｡</font>
 
-<b>Register a new application</b> (または <b>New OAuth App)</b> ボタンをクリックし､登録フォームであなたのアプリの情報を入力します｡<b>Authorization callback URL</b>は、Next.js '/api/auth' route: 'http://localhost:3000/api/auth' です。
+**Register a new application** (または **New OAuth App)** ボタンをクリックし､登録フォームであなたのアプリの情報を入力します｡**Authorization callback URL**は、Next.js '/api/auth' route: 'http://localhost:3000/api/auth' です。
 
-重要なことは､<b>Authorization callback URL</b>の入力欄はAuth0のようなもの (コンマで区切った複数のcallback URL) でなく､ひとつのURLのみ入力可能です｡そのため､後々､本番環境にデプロイしたアプリを作りたい場合､再びGitHub OAuth appを作成する必要があります｡
-<img width="85%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/6.png">
+重要なことは､**Authorization callback URL**の入力欄はAuth0のようなもの (コンマで区切った複数のcallback URL) でなく､ひとつのURLのみ入力可能です｡そのため､後々､本番環境にデプロイしたアプリを作りたい場合､再びGitHub OAuth appを作成する必要があります｡
+<img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/6.png">
 
 <font color="Gray">Authorization callback URLが正しいか確かめてください｡</font>
 
-<b>Register application</b>ボタンをクリックし､<b>Client ID</b>と<b>Client Secret</b>を新規作成します｡それらをコピーし､rootディレクトリの '.env'ファイルに 'GITHUB_ID' と'GITHUB_SECRET' という環境変数として追記します｡また、 'NEXTAUTH_URL' には、GitHubで設定した<b>Authorization callback URL</b>と同じ値 'http://localhost:3000/api/auth' を設定してください。
+**Register application**ボタンをクリックし､**Client ID**と**Client Secret**を新規作成します｡それらをコピーし､rootディレクトリの '.env'ファイルに 'GITHUB_ID' と'GITHUB_SECRET' という環境変数として追記します｡また、 'NEXTAUTH_URL' には、GitHubで設定した**Authorization callback URL**と同じ値 'http://localhost:3000/api/auth' を設定してください。
 
 ```
 # .env
@@ -641,8 +640,8 @@ export default Header;
 <font color="Gray">Headerを通してユーザーがログインすることを許可します｡</font>
 
 ヘッダーがどのようにレンダリングされるのか、その概要を説明します。
-- もし認証されたユーザーがいなかったら､<b>Log in</b>ボタンを表示します｡
-- もしユーザーが認証されていたら､<b>My drafts</b>と<b>New Post</b>､<b>Log out</b>を表示します｡
+- もし認証されたユーザーがいなかったら､**Log in**ボタンを表示します｡
+- もしユーザーが認証されていたら､**My drafts**と**New Post**､**Log out**を表示します｡
 
 すでに 'npm run dev' を実行してアプリを起動することができますが、ログインボタンが表示されるようになっていることがわかると思います。しかし、ログインボタンをクリックすると、 http://localhost:3000/api/auth/signin に移動しますが、Next.js は 404 ページをレンダリングします。
 
@@ -656,3 +655,336 @@ mkdir -p pages/api/auth && touch pages/api/auth/[...nextauth].ts
 
 <font color="Gray">新規ディレクトリとAPIルートを作成します｡</font>
 
+'pages/api/auth/[...nextauth].ts' というこの新規ファイルは､GitHub OAuth認証と[Prisma Adapter](https://next-auth.js.org/adapters/overview#prisma-adapter)で NextAuth.js を設定するために、次の定型文を追加します:
+
+```
+// pages/api/auth/[...nextauth].ts
+
+import { NextApiHandler } from 'next';
+import NextAuth from 'next-auth';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import GitHubProvider from 'next-auth/providers/github';
+import prisma from '../../../lib/prisma';
+
+const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
+export default authHandler;
+
+const options = {
+  providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+  ],
+  adapter: PrismaAdapter(prisma),
+  secret: process.env.SECRET,
+};
+```
+
+<font color="Gray">NextAuthとPrisma Adapterを設定します｡</font>
+
+このコードを一度追加したら､ http://localhost:3000/api/auth/signin に再びアクセスします｡今度は**Sign in with GitHub**ボタンが表示されています｡
+
+ <img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/7.png">
+
+ <font color="Gray">NextAuthを使用してGitHubでサインイン｡</font>
+
+クリックすると GitHub に転送され、そこで GitHub の認証情報を使って認証を行うことができます。認証が完了すると、再びアプリに戻ります。
+
+>**注:** もしエラーが出て認証出来ない場合､アプリを停止し､'npm run dev' で再起動してください｡
+
+ページ上部､ヘッダーのレイアウトが変更され､認証されたユーザーのものになります｡
+
+<img width="100%" alt="GitHub OAuth Apps" src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/8.png">
+
+<font color="Gray">ヘッダーにログアウトボタンが表示されています｡</font>
+
+# ステップ6. 新規投稿機能の追加
+
+このステップでは､ユーザーが新規投稿する昨日を実装します｡認証されたユーザーは**New post**ボタンをクリックして投稿することができます｡
+
+ボタンはすでに '/create' にルート設定されていますが､現状では実装されていないため､404に飛ばされてしまいます｡
+
+これを修正するため､pagesディレクトリに 'create.tsx' というファイルを新規作成します｡
+
+```
+touch pages/create.tsx
+```
+
+<font color="Gray">投稿機能用の新規ファイルを作成します｡</font>
+
+今作成したファイルに以下のコードを追加します｡
+
+```
+// pages/create.tsx
+
+import React, { useState } from 'react';
+import Layout from '../components/Layout';
+import Router from 'next/router';
+
+const Draft: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const submitData = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    // TODO
+    // You will implement this next ...
+  };
+
+  return (
+    <Layout>
+      <div>
+        <form onSubmit={submitData}>
+          <h1>New Draft</h1>
+          <input
+            autoFocus
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            type="text"
+            value={title}
+          />
+          <textarea
+            cols={50}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Content"
+            rows={8}
+            value={content}
+          />
+          <input disabled={!content || !title} type="submit" value="Create" />
+          <a className="back" href="#" onClick={() => Router.push('/')}>
+            or Cancel
+          </a>
+        </form>
+      </div>
+      <style jsx>{`
+        .page {
+          background: var(--geist-background);
+          padding: 3rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        input[type='text'],
+        textarea {
+          width: 100%;
+          padding: 0.5rem;
+          margin: 0.5rem 0;
+          border-radius: 0.25rem;
+          border: 0.125rem solid rgba(0, 0, 0, 0.2);
+        }
+
+        input[type='submit'] {
+          background: #ececec;
+          border: 0;
+          padding: 1rem 2rem;
+        }
+
+        .back {
+          margin-left: 1rem;
+        }
+      `}</style>
+    </Layout>
+  );
+};
+
+export default Draft;
+```
+
+<font color="Gray">投稿作成機能のコンポーネントを新規作成</font>
+
+このページは 'Layout' コンポーネントにラップされ､ 'Header' や他のUIコンポーネントも含みます｡
+
+これは、いくつかの入力フィールドを持つ単純なフォームをレンダリングします。投稿されると、(今は空の) 'submitData' 関数が呼び出されます。この関数ではReactコンポーネントからAPIルートにデータを渡す必要があり、それによって新しい投稿データの実際のデータベースへの保存を処理することができます。
+
+投稿機能の関数を実装:
+```
+// /pages/create.tsx
+
+const submitData = async (e: React.SyntheticEvent) => {
+  e.preventDefault();
+  try {
+    const body = { title, content };
+    await fetch('/api/post', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    await Router.push('/drafts');
+  } catch (error) {
+    console.error(error);
+  }
+};
+```
+
+<font color="Gray">投稿するために､APIルートを呼び出します｡</font>
+
+このコードでは、'useState' を使ってコンポーネントのstateから抽出した 'title' と 'content' プロパティを使用して、'api/post API' ルートへの HTTP POST リクエストで送信しています。
+
+その後、ユーザーを /drafts ページにリダイレクトし、新しく作成された下書きをすぐに見られるようにします。アプリを実行すると、/createルートは以下のようなUIをレンダリングします:
+
+<img width="100%" alt="Create a new draft." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/9.png">
+
+<font color="Gray">新規下書きを作成｡</font>
+
+'api/post' も '/drafts' ルートもまだ存在しないため､まだこれでは動きません｡
+
+はじめに､ユーザーが送信したPOSTリクエストをバックエンドが処理できるようにしましょう｡[Next.js API routes](https://nextjs.org/docs/api-routes/introduction)機能のおかげで､この機能を実装するためにNext.jsアプリを離れる必要はありません｡ 'pages/api' ディレクトリにファイルを追加すれば良いのです｡
+
+'post' という新規ディレクトリを作成し､ その中に 'index.ts' ファイルを新規作成してください:
+```
+mkdir -p pages/api/post && touch pages/api/post/index.ts
+```
+
+<font color="Gray">投稿用の新規APIルートの作成｡</font>
+
+>**注:** この時点で、余分なディレクトリと 'index.ts' ファイルでルーティングをする代わりに、 'pages/api/post.ts' というファイルを作成することも可能でした。なぜそのようにしないかというと、後で 'api/post' ルートでHTTP DELETEリクエストのための直接的なルートを追加する必要があるからです。後でリファクタリングを省くために、すでに必要な方法でファイルを構成しているのです。
+
+そして､次のコードを 'pages/api/post/index.ts'に追加してください:
+
+```
+// pages/api/post/index.ts
+
+import { getSession } from 'next-auth/react';
+import prisma from '../../../lib/prisma';
+
+// POST /api/post
+// Required fields in body: title
+// Optional fields in body: content
+export default async function handle(req, res) {
+  const { title, content } = req.body;
+
+  const session = await getSession({ req });
+  const result = await prisma.post.create({
+    data: {
+      title: title,
+      content: content,
+      author: { connect: { email: session?.user?.email } },
+    },
+  });
+  res.json(result);
+}
+```
+
+<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを更新します。</font>
+
+このコードは '/api/post/' ルートでやってきた任意のリクエストのための*handler*関数を実装します｡この実装は次のことをしています:
+
+1. HTTP POSTリクエストのbodyから 'title' と 'content' を抽出する｡
+2. NextAuth.jsの 'getSession' ヘルパー関数によって､認証ユーザーから来たリクエストかどうかチェックします｡
+3. Prisma Clientを使い､データベースに新規 'Post' レコードを作成する｡
+
+アプリを開き､実装した機能をテストすることができます｡ログインしたあと､タイトルと内容を入力して送信し､確かめてみてください:
+
+<img width="100%" alt="Testing creating a new post via the API Route." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/10.png">
+
+<font color="Gray">APIルートを使って投稿し､テストしてください｡</font>
+
+**Create**をクリックし､ 'Post' レコードをデーターベースに追加します｡なお、作成直後にリダイレクトされる '/drafts' のルートはまだ 404 が表示されますが、これはすぐに修正します。ちなみにこの状態でも、'npx prisma studio' でPrisma Studioを再度実行すると、新しいPostレコードがデータベースに追加されていることが確認できます。
+
+# ステップ6. 下書き機能の追加
+
+このステップでは､認証されたユーザーに現在の下書きを見ることができるようなページをアプリに追加します｡
+
+このページは、認証されたユーザーに依存しているため、静的にレンダリングすることはできません。このように、認証されたユーザーに基づいて動的にデータを取得するページは、 'getServerSideProps' によるサーバーサイドレンダリング（SSR）の素晴らしい使用例となります。
+
+まず､ 'pages' ディレクトリに 'drafts.tsx' という新規ファイルを作成します｡
+```
+touch pages/drafts.tsx
+```
+
+<font color="Gray">下書き機能のために新規ページを追加します｡</font>
+
+次に､以下のコードをファイルに追加してください:
+```
+// pages/drafts.tsx
+
+import React from 'react';
+import { GetServerSideProps } from 'next';
+import { useSession, getSession } from 'next-auth/react';
+import Layout from '../components/Layout';
+import Post, { PostProps } from '../components/Post';
+import prisma from '../lib/prisma';
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.statusCode = 403;
+    return { props: { drafts: [] } };
+  }
+
+  const drafts = await prisma.post.findMany({
+    where: {
+      author: { email: session.user.email },
+      published: false,
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+  return {
+    props: { drafts },
+  };
+};
+
+type Props = {
+  drafts: PostProps[];
+};
+
+const Drafts: React.FC<Props> = (props) => {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return (
+      <Layout>
+        <h1>My Drafts</h1>
+        <div>You need to be authenticated to view this page.</div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      <div className="page">
+        <h1>My Drafts</h1>
+        <main>
+          {props.drafts.map((post) => (
+            <div key={post.id} className="post">
+              <Post post={post} />
+            </div>
+          ))}
+        </main>
+      </div>
+      <style jsx>{`
+        .post {
+          background: var(--geist-background);
+          transition: box-shadow 0.1s ease-in;
+        }
+
+        .post:hover {
+          box-shadow: 1px 1px 3px #aaa;
+        }
+
+        .post + .post {
+          margin-top: 2rem;
+        }
+      `}</style>
+    </Layout>
+  );
+};
+
+export default Drafts;
+```
+
+<font color="Gray">Draftページを更新し､下書きリストを表示できるようにします｡</font>
+
+このReactコンポーネントでは、認証されたユーザーの「下書き」の一覧をレンダリングしています。Prisma Clientによるデータベースへの問い合わせは 'getServerSideProps' で実行されるため、下書きはサーバーサイドレンダリング時にデータベースから取得されます。そしてそのデータは、Reactコンポーネントの 'props' を介して利用できるようになります。
+
+これでアプリの**My drafts**に移動すると、以前作成した未公開の投稿が表示されます。
+
+<img width="100%" alt="Completed drafts page." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/11.png">
+
+<font color="Gray">下書きページを完成させる｡</font>
