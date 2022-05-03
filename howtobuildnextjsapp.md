@@ -11,6 +11,8 @@ written by nikolasburk
 
 ***
 
+Next.js､Prisma､PostgreSQLのフルスタックアプリケーションを作成し､Vercelにデプロイする｡
+
 [Prisma](https://www.prisma.io/)はNode.jsとTypeScriptのアプリケーションでデータベースにアクセスする次世代のORMである｡この文章は､次の技術を用いてフルスタックのブログアプリを作るガイドです｡
 
 - [Next.js](https://nextjs.org/) Reactのフレームワーク
