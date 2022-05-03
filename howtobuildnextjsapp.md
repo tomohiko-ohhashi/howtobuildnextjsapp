@@ -4,6 +4,7 @@
 以下を翻訳した文章になります｡
 
 How to Build a Fullstack App with Next.js, Prisma, and PostgreSQL
+written by nikolasburk
 
 https://vercel.com/guides/nextjs-prisma-postgres
 
@@ -988,3 +989,7 @@ export default Drafts;
 <img width="100%" alt="Completed drafts page." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/11.png">
 
 <font color="Gray">下書きページを完成させる｡</font>
+
+# ステップ7. 公開機能の追加
+
+下書きを公開フィード画面に移動するため､"publish" する機能が必要になります｡それはすなわち､データベースの 'Post'レコードの 'published' フィールドを 'true' に更新することです｡この機能は､投稿詳細画面
