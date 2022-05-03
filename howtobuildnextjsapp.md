@@ -8,7 +8,7 @@ written by nikolasburk
 
 https://vercel.com/guides/nextjs-prisma-postgres
 
----
+***
 
 [Prisma](https://www.prisma.io/)はNode.jsとTypeScriptのアプリケーションでデータベースにアクセスする次世代のORMである｡この文章は､次の技術を用いてフルスタックのブログアプリを作るガイドです｡
 
@@ -868,7 +868,7 @@ export default async function handle(req, res) {
 }
 ```
 
-<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを更新します。</font>
+<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。</font>
 
 このコードは '/api/post/' ルートでやってきた任意のリクエストのための*handler*関数を実装します｡この実装は次のことをしています:
 
@@ -1127,3 +1127,41 @@ export default Post;
 
 
 # ステップ8. 削除機能の追加
+
+最後は､ 'Post' レコードからユーザーが削除する機能の実装です｡まず､バックエンドでAPIルートハンドラを実装し、フロントエンドで新しいルートを利用するように修正します｡「公開」機能と同様のアプローチをとることになります。
+
+'pages/api/post' ディレクトリに '[id].ts' ファイルを新規作成してください:
+
+```
+touch pages/api/post/[id].ts
+```
+
+<font color="Gray">投稿を削除する新規APIルートを作成します｡</font>
+
+そして､作成したファイルに以下のコードを追加してください:
+
+```
+// pages/api/post/[id].ts
+
+import prisma from '../../../lib/prisma';
+
+// DELETE /api/post/:id
+export default async function handle(req, res) {
+  const postId = req.query.id;
+  if (req.method === 'DELETE') {
+    const post = await prisma.post.delete({
+      where: { id: postId },
+    });
+    res.json(post);
+  } else {
+    throw new Error(
+      `The HTTP ${req.method} method is not supported at this route.`,
+    );
+  }
+}
+```
+
+<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを追加します。</font>
+
+このコードは、 '/api/post/:id' URL経由で入ってくるHTTP DELETEリクエストを処理します。ルートハンドラーは、URLから 'Post' レコードの 'id' を取得し、Prisma Clientを使用してデータベース内のこのレコードを削除します。
+
