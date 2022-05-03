@@ -73,8 +73,10 @@ $ npx prisma init
 
 '.env' ファイルを開き､ダミーの接続URLを､あなたのPostgreSQLデータベース接続URLに書き換えてください｡たとえば､もしHerokuのデータベースを使うなら､URLは次のようになっているかと思います:
 
-    // .env
-    DATABASE_URL="postgresql://giwuzwpdnrgtzv:d003c6a604bb400ea955c3abd8c16cc98f2d909283c322ebd8e9164b33ccdb75@ec2-54-170-123-247.eu-west-1.compute.amazonaws.com:5432/d6ajekcigbuca9"
+```
+// .env
+DATABASE_URL="postgresql://giwuzwpdnrgtzv:d003c6a604bb400ea955c3abd8c16cc98f2d909283c322ebd8e9164b33ccdb75@ec2-54-170-123-247.eu-west-1.compute.amazonaws.com:5432/d6ajekcigbuca9"
+```
 
 <font color="Gray">データベース接続URLの例</font>
 
@@ -86,35 +88,36 @@ $ npx prisma init
 このステップでは､Prisma CLIを使用してあなたのデータベースにテーブルを作成します｡
 
 モデル定義を'schema.prisma'に追記し､以下のようになるようにします:
+```
+// schema.prisma
+datasource db {
+provider = "postgresql"
+url      = env("DATABASE_URL")
+}
 
-    // schema.prisma
-    datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-    }
+generator client {
+provider = "prisma-client-js"
+}
 
-    generator client {
-    provider = "prisma-client-js"
-    }
+model Post {
+id        Int     @default(autoincrement()) @id
+title     String
+content   String?
+published Boolean @default(false)
+author    User?   @relation(fields: [authorId], references: [id])
+authorId  Int?
+}
 
-    model Post {
-    id        Int     @default(autoincrement()) @id
-    title     String
-    content   String?
-    published Boolean @default(false)
-    author    User?   @relation(fields: [authorId], references: [id])
-    authorId  Int?
-    }
-
-    model User {
-    id            Int       @default(autoincrement()) @id
-    name          String?
-    email         String?   @unique
-    createdAt     DateTime  @default(now()) @map(name: "created_at")
-    updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-    posts         Post[]
-    @@map(name: "users")
-    }
+model User {
+id            Int       @default(autoincrement()) @id
+name          String?
+email         String?   @unique
+createdAt     DateTime  @default(now()) @map(name: "created_at")
+updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+posts         Post[]
+@@map(name: "users")
+}
+```
 
 <font color="Gray">Prisma schema</font>
 
@@ -123,6 +126,7 @@ $ npx prisma init
 このPrismaスキーマは2つのモデルを定義し、それぞれが基礎となるデータベースのテーブルにマッピングされます。'User'と'Post'です。2つのモデルの間には、'Post'の'author'フィールドと'User'の'posts'フィールドを介したリレーション（一対多）も存在することに注意してください。
 
 実際にデータベースにテーブルを作るため､Prisma CLIに次のコマンドを実行してください:
+
 ```
 $ npx prisma db push
 ```
@@ -130,16 +134,21 @@ $ npx prisma db push
 
 次の出力がされます:
 
-    Environment variables loaded from /Users/nikolasburk/Desktop/nextjs-guide/blogr-starter/.env
-    Prisma schema loaded from prisma/schema.prisma
+```
+Environment variables loaded from /Users/nikolasburk/Desktop/nextjs-guide/blogr-starter/.env
+Prisma schema loaded from prisma/schema.prisma
 
-    🚀  Your database is now in sync with your schema. Done in 2.10s
+🚀  Your database is now in sync with your schema. Done in 2.10s
+```
+
 <font color="Gray">データベースにPrisma schemaをpushしたときの出力｡</font>
 
 おめでとう､テーブルが作成されました！Prisma Studioを使ってダミーのデータを作ってください｡次のコマンドを実行します:
+
 ```
 $ npx prisma studio
 ```
+
 <font color="Gray">Prisma Studioを開き､データベースをGUIで修正します｡</font>
 
 Prisma Studioのインターフェースを使って､新たに 'User'と'Post'のレコードを作成し､それらを関係フィールドで接続します｡
@@ -159,36 +168,44 @@ Prismaを利用してNext.jsからデータベースにアクセスする前に�
 ```
 $ npm install @prisma/client
 ```
+
 <font color="Gray">Prisma Clientパッケージをインストール</font>
 
 Prisma Clientは独自のスキーマに合わせて作られているため、Prismaのスキーマファイルが変更されるたびに、以下のコマンドを実行して更新する必要があります:
+
 ```
 $ npx prisma generate
 ```
+
 <font color="Gray">Prisma Schemaの再生成｡</font>
 
 'PrismaClient'のインスタンスを1つだけ使用し、必要なファイルにインポートすることができます。このインスタンスは、'lib/' ディレクトリ内の 'prisma.ts' ファイルに作成されます。次のコマンドで不足しているディレクトリとファイルを作成します。:
+
 ```
 $ mkdir lib && touch lib/prisma.ts
 ```
+
 <font color="Gray">Prismaライブラリのために新規ディレクトリを作成｡</font>
 
 そして､次のコードを 'lib/prisma.ts' に追記してください:
-    // lib/prisma.ts
-    import { PrismaClient } from '@prisma/client';
 
-    let prisma: PrismaClient;
+```ts
+// lib/prisma.ts
+import { PrismaClient } from '@prisma/client';
 
-    if (process.env.NODE_ENV === 'production') {
-    prisma = new PrismaClient();
-    } else {
-    if (!global.prisma) {
-        global.prisma = new PrismaClient();
-    }
-    prisma = global.prisma;
-    }
+let prisma: PrismaClient;
 
-    export default prisma;
+if (process.env.NODE_ENV === 'production') {
+prisma = new PrismaClient();
+} else {
+if (!global.prisma) {
+    global.prisma = new PrismaClient();
+}
+prisma = global.prisma;
+}
+
+export default prisma;
+```
 
 <font color="Gray">Prisma Clientへの接続を作成｡</font>
 
@@ -199,10 +216,12 @@ $ mkdir lib && touch lib/prisma.ts
 
 'pages/index.tsx' に実装されているブログ記事フィードと 'pages/p/[id].tsx' に実装されている記事詳細ビューは、現在ハードコードされたデータを返しています。このステップでは、Prisma Clientを使用してデータベースからデータを返すように実装を調整します。
 
-'pages/index.tsx' を開き、既存の 'import' 宣言のすぐ下に以下のコードを追加します。:
+'pages/index.tsx' を開き、既存の 'import' 宣言のすぐ下に以下のコードを追加します:
 
-    // pages/index.tsx
-    import prisma from '../lib/prisma';
+```tsx
+// pages/index.tsx
+import prisma from '../lib/prisma';
+```
 
 <font color="Gray">Prisma Clientにインポートする｡</font>
 
@@ -210,18 +229,20 @@ $ mkdir lib && touch lib/prisma.ts
 
 これで、'index.tsx' 内の 'getStaticProps' でハードコードされたフィードオブジェクトを、データベースへの適切な呼び出しに置き換えることができます:
 
-    // index.tsx
-    export const getStaticProps: GetStaticProps = async () => {
-    const feed = await prisma.post.findMany({
-        where: { published: true },
-        include: {
-        author: {
-            select: { name: true },
-        },
-        },
-    });
-    return { props: { feed } };
-    };
+```tsx
+// index.tsx
+export const getStaticProps: GetStaticProps = async () => {
+const feed = await prisma.post.findMany({
+    where: { published: true },
+    include: {
+    author: {
+        select: { name: true },
+    },
+    },
+});
+return { props: { feed } };
+};
+```
 
 <font color="Gray">データベース内のすべての公開記事を検索します。</font>
 
@@ -235,29 +256,33 @@ Prisma Clientクエリで注意すべき2点:
 
 前回同様に､まずはじめにページ上でPrisma Clientをインポートする必要があります:
 
-    // pages/p/[id].tsx
-    import prisma from '../../lib/prisma';
+```tsx
+// pages/p/[id].tsx
+import prisma from '../../lib/prisma';
+```
 
 <font color="Gray">Prisma Clientをインポート</font>
 
 これで、'getServerSideProps' の実装を更新して、データベースから適切なポストを取得し、コンポーネントの 'props' を介してフロントエンドで利用できるようにすることができます:
 
-    // pages/p/[id].tsx
-    export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const post = await prisma.post.findUnique({
-        where: {
-        id: Number(params?.id) || -1,
-        },
-        include: {
-        author: {
-            select: { name: true },
-        },
-        },
-    });
-    return {
-        props: post,
-    };
-    };
+```tsx
+// pages/p/[id].tsx
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const post = await prisma.post.findUnique({
+      where: {
+      id: Number(params?.id) || -1,
+      },
+      include: {
+      author: {
+          select: { name: true },
+      },
+      },
+  });
+  return {
+      props: post,
+  };
+};
+```
 
 <font color="Gray">IDをもとに特定の投稿を検索する。</font>
 
@@ -400,7 +425,7 @@ NEXTAUTH_URL=http://localhost:3000/api/auth
 
 また、アプリケーション全体にわたってユーザーの認証状態を持続させる必要があります。アプリケーションのルートファイル '_app.tsx' をすばやく変更し、現在のルートコンポーネントを 'next-auth/react' パッケージの 'SessionProvider' でラップしてください。このファイルを開き、現在の内容を次のコードに置き換えます:
 
-```
+```tsx
 // _app.tsx
 
 import { SessionProvider } from 'next-auth/react';
@@ -421,9 +446,9 @@ export default App;
 
 # ステップ5-2. ログイン機能の追加
 
-ログインボタンといくつかのUIコンポーネントを 'Header.tsx' ファイルに追加していきます｡ファイルを開き､次のコートを貼り付けてください:
+ログインボタンといくつかのUIコンポーネントを 'Header.tsx' ファイルに追加していきます｡ファイルを開き､次のコードを貼り付けてください:
 
-```
+```tsx
 // Header.tsx
 import React from 'react';
 import Link from 'next/link';
@@ -658,7 +683,7 @@ mkdir -p pages/api/auth && touch pages/api/auth/[...nextauth].ts
 
 'pages/api/auth/[...nextauth].ts' というこの新規ファイルは､GitHub OAuth認証と[Prisma Adapter](https://next-auth.js.org/adapters/overview#prisma-adapter)で NextAuth.js を設定するために、次の定型文を追加します:
 
-```
+```ts
 // pages/api/auth/[...nextauth].ts
 
 import { NextApiHandler } from 'next';
@@ -716,7 +741,7 @@ touch pages/create.tsx
 
 今作成したファイルに以下のコードを追加します｡
 
-```
+```tsx
 // pages/create.tsx
 
 import React, { useState } from 'react';
@@ -800,7 +825,8 @@ export default Draft;
 これは、いくつかの入力フィールドを持つ単純なフォームをレンダリングします。投稿されると、(今は空の) 'submitData' 関数が呼び出されます。この関数ではReactコンポーネントからAPIルートにデータを渡す必要があり、それによって新しい投稿データの実際のデータベースへの保存を処理することができます。
 
 投稿機能の関数を実装:
-```
+
+```tsx
 // /pages/create.tsx
 
 const submitData = async (e: React.SyntheticEvent) => {
@@ -834,6 +860,7 @@ const submitData = async (e: React.SyntheticEvent) => {
 はじめに､ユーザーが送信したPOSTリクエストをバックエンドが処理できるようにしましょう｡[Next.js API routes](https://nextjs.org/docs/api-routes/introduction)機能のおかげで､この機能を実装するためにNext.jsアプリを離れる必要はありません｡ 'pages/api' ディレクトリにファイルを追加すれば良いのです｡
 
 'post' という新規ディレクトリを作成し､ その中に 'index.ts' ファイルを新規作成してください:
+
 ```
 mkdir -p pages/api/post && touch pages/api/post/index.ts
 ```
@@ -844,7 +871,7 @@ mkdir -p pages/api/post && touch pages/api/post/index.ts
 
 そして､次のコードを 'pages/api/post/index.ts'に追加してください:
 
-```
+```ts
 // pages/api/post/index.ts
 
 import { getSession } from 'next-auth/react';
@@ -891,6 +918,7 @@ export default async function handle(req, res) {
 このページは、認証されたユーザーに依存しているため、静的にレンダリングすることはできません。このように、認証されたユーザーに基づいて動的にデータを取得するページは、 'getServerSideProps' によるサーバーサイドレンダリング（SSR）の素晴らしい使用例となります。
 
 まず､ 'pages' ディレクトリに 'drafts.tsx' という新規ファイルを作成します｡
+
 ```
 touch pages/drafts.tsx
 ```
@@ -898,7 +926,8 @@ touch pages/drafts.tsx
 <font color="Gray">下書き機能のために新規ページを追加します｡</font>
 
 次に､以下のコードをファイルに追加してください:
-```
+
+```tsx
 // pages/drafts.tsx
 
 import React from 'react';
@@ -1006,7 +1035,7 @@ mkdir -p pages/api/publish && touch pages/api/publish/[id].ts
 
 そして､以下のコードを作成したファイルに追記してください:
 
-```
+```ts
 // pages/api/publish/[id].ts
 
 import prisma from '../../../lib/prisma';
@@ -1028,7 +1057,7 @@ URLから 'Post' のIDを取得し、Prisma Clientの 'update' メソッドで '
 
 つぎに､フロントエンドの 'pages/p/[id].tsx' ファイルに公開機能を実装します｡このファイルを開き､内容を以下のように書き換えてください:
 
-```
+```tsx
 // pages/p/[id].tsx
 
 import React from 'react';
@@ -1140,7 +1169,7 @@ touch pages/api/post/[id].ts
 
 そして､作成したファイルに以下のコードを追加してください:
 
-```
+```ts
 // pages/api/post/[id].ts
 
 import prisma from '../../../lib/prisma';
