@@ -992,4 +992,135 @@ export default Drafts;
 
 # ステップ7. 公開機能の追加
 
-下書きを公開フィード画面に移動するため､"publish" する機能が必要になります｡それはすなわち､データベースの 'Post'レコードの 'published' フィールドを 'true' に更新することです｡この機能は､投稿詳細画面
+下書きを投稿公開画面に移動させるるため､"publish (公開)" する機能が必要になります｡それはすなわち､データベースの 'Post'レコードの 'published' フィールドを 'true' に更新することです｡この機能は､現在 'pages/p/[id].tsx' にある投稿詳細画面に実装していきます｡
+
+公開はHTTP PUTリクエストを使い､ "Next.js backend" の 'api/publish' ルートに送られます｡まずはルートを実装しましょう｡
+
+'pages/api' ディレクトリに 'publish' ディレクトリを新規作成しましょう｡そして､ '[id].ts' というファイルをその中に新規作成します｡
+
+```
+mkdir -p pages/api/publish && touch pages/api/publish/[id].ts
+```
+
+<font color="Gray">投稿を公開する新規APIルートを作成します｡</font>
+
+そして､以下のコードを作成したファイルに追記してください:
+
+```
+// pages/api/publish/[id].ts
+
+import prisma from '../../../lib/prisma';
+
+// PUT /api/publish/:id
+export default async function handle(req, res) {
+  const postId = req.query.id;
+  const post = await prisma.post.update({
+    where: { id: postId },
+    data: { published: true },
+  });
+  res.json(post);
+}
+```
+
+<font color="Gray">Prisma Clientを使用してデータベースを変更するためのAPIルートを更新します。</font>
+
+URLから 'Post' のIDを取得し、Prisma Clientの 'update' メソッドで 'Post' レコードの 'published' フィールドを 'true' に更新するAPIルートハンドラーの実装です。
+
+つぎに､フロントエンドの 'pages/p/[id].tsx' ファイルに公開機能を実装します｡このファイルを開き､内容を以下のように書き換えてください:
+
+```
+// pages/p/[id].tsx
+
+import React from 'react';
+import { GetServerSideProps } from 'next';
+import ReactMarkdown from 'react-markdown';
+import Router from 'next/router';
+import Layout from '../../components/Layout';
+import { PostProps } from '../../components/Post';
+import { useSession } from 'next-auth/react';
+import prisma from '../../lib/prisma';
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: String(params?.id),
+    },
+    include: {
+      author: {
+        select: { name: true, email: true },
+      },
+    },
+  });
+  return {
+    props: post,
+  };
+};
+
+async function publishPost(id: string): Promise<void> {
+  await fetch(`/api/publish/${id}`, {
+    method: 'PUT',
+  });
+  await Router.push('/');
+}
+
+const Post: React.FC<PostProps> = (props) => {
+  const { data: session, status } = useSession();
+  if (status === 'loading') {
+    return <div>Authenticating ...</div>;
+  }
+  const userHasValidSession = Boolean(session);
+  const postBelongsToUser = session?.user?.email === props.author?.email;
+  let title = props.title;
+  if (!props.published) {
+    title = `${title} (Draft)`;
+  }
+
+  return (
+    <Layout>
+      <div>
+        <h2>{title}</h2>
+        <p>By {props?.author?.name || 'Unknown author'}</p>
+        <ReactMarkdown children={props.content} />
+        {!props.published && userHasValidSession && postBelongsToUser && (
+          <button onClick={() => publishPost(props.id)}>Publish</button>
+        )}
+      </div>
+      <style jsx>{`
+        .page {
+          background: var(--geist-background);
+          padding: 2rem;
+        }
+
+        .actions {
+          margin-top: 2rem;
+        }
+
+        button {
+          background: #ececec;
+          border: 0;
+          border-radius: 0.125rem;
+          padding: 1rem 2rem;
+        }
+
+        button + button {
+          margin-left: 1rem;
+        }
+      `}</style>
+    </Layout>
+  );
+};
+
+export default Post;
+```
+
+<font color="Gray">Postコンポーネントを更新し、APIルート経由での公開を処理するようにします。</font>
+
+このコードでは、先ほど実装したAPIルートにHTTP PUTリクエストを送信する役割を担う 'PublishPost' 関数をReactコンポーネントに追加します。また、コンポーネントの 'render' 関数を修正して、ユーザーが認証されているかどうかをチェックし、認証されている場合は、投稿の詳細画面にも**Publish**ボタンを表示するようにしました。
+
+<img width="100%" alt="Create a new draft." src="https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/12.png">
+
+<font color="Gray">投稿用のPublishボタンが表示されました｡</font>
+
+ボタンをクリックしたら､投稿公開画面に遷移し､そこに投稿が表示されます！
+
+>**注:** アプリを本番環境にデプロイすると、投稿公開画面が更新されるのはアプリ全体が再デプロイされたときだけです！これは、このビューのデータを取得するために 'getStaticProps' を使用して静的サイト生成 (SSG) を行っているためです。もし「すぐに」更新させたいのであれば、 'getStaticProps' を 'serverSideProps' に変更するか、Incremental Static Regeneration を使用することを検討してください。
