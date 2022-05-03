@@ -980,7 +980,7 @@ const Drafts: React.FC<Props> = (props) => {
 export default Drafts;
 ```
 
-<font color="Gray">Draftページを更新し､下書きリストを表示できるようにします｡</font>
+<font color="Gray">下書きページを更新し､下書きリストを表示できるようにします｡</font>
 
 このReactコンポーネントでは、認証されたユーザーの「下書き」の一覧をレンダリングしています。Prisma Clientによるデータベースへの問い合わせは 'getServerSideProps' で実行されるため、下書きはサーバーサイドレンダリング時にデータベースから取得されます。そしてそのデータは、Reactコンポーネントの 'props' を介して利用できるようになります。
 
