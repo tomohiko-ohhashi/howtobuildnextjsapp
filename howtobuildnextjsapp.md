@@ -1314,7 +1314,7 @@ GitHubのリポジトリができたので、それをVercelにインポート�
 
 ![Your application deployed to Vercel.](https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/17.png)
 
->あなたのアプリがVercelにデプロイされました｡
+>あなたのアプリがVercelにデプロイされました｡この画像に加えSECRET変数も設定してください｡
 
 **Visit**ボタンをクリックし､あなたの作成したフルスタックアプリを見ることができます🎉
 
