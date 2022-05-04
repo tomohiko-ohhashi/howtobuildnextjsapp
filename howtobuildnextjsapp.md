@@ -1301,7 +1301,7 @@ GitHubのリポジトリができたので、それをVercelにインポート�
 
 ![Add environment variables to Vercel.](https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/16.png)
 
->Vercelに環境変数を入力します｡
+>Vercelに環境変数を入力します｡この画像に加えSECRET変数も設定してください｡
 
 入力項目:
 - 'DATABASE_URL': '.env' からこの値をコピーして入力してください
@@ -1314,7 +1314,7 @@ GitHubのリポジトリができたので、それをVercelにインポート�
 
 ![Your application deployed to Vercel.](https://vercel.com/docs-proxy/static/guides/nextjs-prisma-postgres/17.png)
 
->あなたのアプリがVercelにデプロイされました｡この画像に加えSECRET変数も設定してください｡
+>あなたのアプリがVercelにデプロイされました｡
 
 **Visit**ボタンをクリックし､あなたの作成したフルスタックアプリを見ることができます🎉
 
