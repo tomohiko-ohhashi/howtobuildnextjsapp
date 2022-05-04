@@ -81,6 +81,8 @@ $ npx prisma init
 
 これにより､'prisma'という新しいディレクトリ内に､次のファイルが作成されます｡
 - 'schema.prisma': データベースのスキーマ情報を含むPrismaの設定ファイル
+
+また､rootディレクトリに次のファイルも作成されます｡
 - '.env': データベース接続URLや環境変数といった情報を定義する[dotenv](https://github.com/motdotla/dotenv)ファイルです｡
 
 '.env' ファイルを開き､ダミーの接続URLを､あなたのPostgreSQLデータベース接続URLに書き換えてください｡たとえば､もしHerokuのデータベースを使うなら､URLは次のようになっているかと思います:
