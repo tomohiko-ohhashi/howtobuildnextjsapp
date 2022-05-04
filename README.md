@@ -9,6 +9,10 @@ written by nikolasburk
 [https://vercel.com/guides/nextjs-prisma-postgres](https://vercel.com/guides/nextjs-prisma-postgres)
 
 
+当記事で完成させたアプリをデプロイしています｡
+
+[https://to-blogr.vercel.app/](https://to-blogr.vercel.app/)
+
 ***
 
 Next.js､Prisma､PostgreSQLのフルスタックアプリケーションを作成し､Vercelにデプロイする｡
