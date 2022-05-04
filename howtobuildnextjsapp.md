@@ -1306,8 +1306,9 @@ GitHubのリポジトリができたので、それをVercelにインポート�
 入力項目:
 - 'DATABASE_URL': '.env' からこの値をコピーして入力してください
 - 'GITHUB_ID': 本番用のGitHub OAuth appから**Client ID**をコピーして入力してください
-- 'GITHUB_SECRET': 本番用のGitHub OAuth appから**Client ID**をコピーして入力してください
+- 'GITHUB_SECRET': 本番用のGitHub OAuth appから**Client secrets**をコピーして入力してください
 - 'NEXTAUTH_URL': 本番用のGitHub OAuth appから**Authorization Callback URL**をコピーして入力してください
+- SECRET: GITHUB_SECRETと同じものを入力してください｡Prismaが使用します｡
 
 全ての環境変数が入力できたら､**Deploy**ボタンをクリックしてください｡あなたのアプリがVercelにデプロイされます｡準備ができたら､Vercelが成功画面を表示します:
 
