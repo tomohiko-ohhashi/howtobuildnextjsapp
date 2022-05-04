@@ -1229,20 +1229,20 @@ async function deletePost(id: string): Promise<void> {
 
 >Postコンポーネントを更新し、APIルート経由で削除を処理するようにします。
 
-公開ボタンと同じように､認証ユーザーに**Delete**ボタンをレンダリングできます｡これを実現するには、**Publish**ボタンがレンダリングされる場所のすぐ下にある 'Post' コンポーネントの 'return' 部分に、次のコードを直接追加します:
+公開ボタンと同じように､認証ユーザーに**Delete**ボタンをレンダリングできます｡これを実現するには、**Publish**ボタンがレンダリングされる場所のすぐ下にある 'Post' コンポーネントの 'return' 部分を、次のコードに修正します:
 
 ```tsx
 // pages/p/[id].tsx
-{
-  !props.published && userHasValidSession && postBelongsToUser && (
-    <button onClick={() => publishPost(props.id)}>Publish</button>
-  );
-}
-{
-  userHasValidSession && postBelongsToUser && (
-    <button onClick={() => deletePost(props.id)}>Delete</button>
-  );
-}
+        {
+          !props.published && userHasValidSession && postBelongsToUser && (
+            <button onClick={() => publishPost(props.id)}>Publish</button>
+          )
+        }
+        {
+          userHasValidSession && postBelongsToUser && (
+            <button onClick={() => deletePost(props.id)}>Delete</button>
+          )
+        }
 ```
 
 >PublisボタンとDeleteボタンのどちらかを表示するか決定するロジックを作成します｡
