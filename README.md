@@ -8,9 +8,10 @@ written by nikolasburk
 
 [https://vercel.com/guides/nextjs-prisma-postgres](https://vercel.com/guides/nextjs-prisma-postgres)
 
+当記事で完成したソースコードはこちら｡
+[https://github.com/tomohiko-ohhashi/to-blogr](https://github.com/tomohiko-ohhashi/to-blogr)
 
 当記事で完成させたアプリをデプロイしています｡
-
 [https://to-blogr.vercel.app/](https://to-blogr.vercel.app/)
 
 ***
